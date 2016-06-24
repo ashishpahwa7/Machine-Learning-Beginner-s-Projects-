@@ -6,7 +6,7 @@ from sklearn import neighbors
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import MinMaxScaler
 
-#Data Preprocessing - Preparing data
+# loading data from file and Preparing for machine learning
 
 def file2matrix(filename):
 
@@ -25,7 +25,7 @@ def file2matrix(filename):
 		index += 1
 	return returnMat,classLabelVector
 
-#Data Preprocessing-Feature scaling - Normalization
+#Data Normalization code
 def autonorm(FeatureMatrix):
 
 	scaler = MinMaxScaler()
@@ -33,7 +33,7 @@ def autonorm(FeatureMatrix):
 	return rescaled_DataSet
 
 
-# Data Preprocessing-Spliting into training and test set (80-20)
+# Spliting into training and test sets (80-20 split)
 def SplitData(FeatureMatrix, classLabelVector):
 
 	no_of_samples = len(FeatureMatrix)
@@ -50,7 +50,7 @@ def SplitData(FeatureMatrix, classLabelVector):
 	return features_train, labels_train, features_test, labels_test
 
 
-# Visualizing data
+# Visualizing data 
 def drawPlot(features_train, labels_train):
 	
 	fig = plt.figure()
@@ -59,7 +59,7 @@ def drawPlot(features_train, labels_train):
 	plt.show()
 
 
-# Implmentation of K- Nearest neighbours
+#K- Nearest neighbours
 def classify(features_train, labels_train):
 	
 	clf = neighbors.KNeighborsClassifier(n_neighbors = 3)
@@ -68,7 +68,6 @@ def classify(features_train, labels_train):
 	return clf
 	
 # Testing classifier and printing accuracy score 
-
 def TestClassifier(clf, features_test, labels_test):
 	pred = clf.predict(features_test)	
 	
@@ -78,14 +77,13 @@ def TestClassifier(clf, features_test, labels_test):
 def classifyPerson(clf):
 
 	resultList = ['not at all','in small doses', 'in large doses']
-	percentTats = float(raw_input("Percentage of time playing video games? \t"))
+	percentTats = float(raw_input(" \tPercentage of time playing video games? \t"))
 	ffMiles = float(raw_input("frequent flier miles earned per year? \t"))
 	iceCream = float(raw_input("liters of ice cream consumed per year? \t"))
 	inArr = array([[ffMiles, percentTats, iceCream]])
 	result = clf.predict(inArr)
 	result = (result[0]).astype(int)
-	print "You'll probably like the person : ",resultList[result]
-
+	print "you'll probably like the person : ",resultList[result]
 
 
 
@@ -96,13 +94,6 @@ clf = classify(features_train, labels_train)
 
 import pickle
 pickle.dump(clf,open("classifier.p","wb"))
-
-
-
-
-
-
-
 
 
 
